@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Watch Videos</title>
@@ -9,45 +10,57 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            {% comment %} background-color: #f0f0f0; {% endcomment %}
         }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            {% comment %} background-color: #fff; {% endcomment %}
             border-radius: 5px;
-            {% comment %} box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); {% endcomment %}
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        @media (max-width: 780px) {
+            .container {
+                box-shadow: none;
+                /* Remove box shadow on smaller screens */
+            }
+        }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+
         li {
             margin-bottom: 20px;
             padding: 20px;
-            background-color: #f9f9f9;
             border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
             position: relative;
             display: flex;
             flex-direction: column;
         }
+
         h2 {
             margin-top: 0;
         }
+
         video {
             width: 100%;
             border-radius: 5px;
         }
+
         p {
             margin-top: 10px;
         }
+
         .play-icon {
             font-size: 24px;
             color: #333;
@@ -57,6 +70,7 @@
             transform: translate(-50%, -50%);
             cursor: pointer;
         }
+
         .delete-button {
             padding: 10px 30px;
             background-color: #f74242;
@@ -69,36 +83,39 @@
             top: 10px;
             right: 10px;
         }
+
         .delete-button:hover {
             background-color: #d62929;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1><i class="fas fa-video"></i> Uploaded Videos</h1>
         <ul>
             {% for video in videos %}
-                <li>
-                    <h2>{{ video.video_title }}</h2>
-                    {% if usertype == 'admin' %}
-                        <form action="{% url 'delete_video' video.pk %}" method="post" class="acknowledge-form">
-                            {% csrf_token %}
-                            <input type="hidden" name="delete" value="delete">
-                            <button type="submit" class="delete-button"><i class="fas fa-trash-alt icon"></i> Delete</button>
-                        </form>
-                    {% endif %}
-                    <div style="position:relative;">
-                        <video controls>
-                            <source src="{{ video.video_file.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <i class="fas fa-play play-icon"></i>
-                    </div>
-                    <p>Description: {{ video.video_desc }}</p>
-                </li>
+            <li>
+                <h2>{{ video.video_title }}</h2>
+                {% if usertype == 'admin' %}
+                <form action="{% url 'delete_video' video.pk %}" method="post" class="acknowledge-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete" value="delete">
+                    <button type="submit" class="delete-button"><i class="fas fa-trash-alt icon"></i> Delete</button>
+                </form>
+                {% endif %}
+                <div style="position:relative;">
+                    <video controls>
+                        <source src="{{ video.video_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <i class="fas fa-play play-icon"></i>
+                </div>
+                <p> <b>Description:</b> {{ video.video_desc }}</p>
+            </li>
             {% endfor %}
         </ul>
     </div>
 </body>
+
 </html>

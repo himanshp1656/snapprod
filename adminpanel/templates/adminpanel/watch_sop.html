@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,22 +9,52 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            {% comment %} background-color: #f4f4f4; {% endcomment %}
+
+                {
+                % comment %
+            }
+
+            background-color: #f4f4f4;
+
+                {
+                % endcomment %
+            }
+
             margin: 0;
             padding: 20px;
         }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
-            {% comment %} background-color: #fff; {% endcomment %}
+
+                {
+                % comment %
+            }
+
+            background-color: #fff;
+
+                {
+                % endcomment %
+            }
+
             padding: 20px;
             border-radius: 5px;
-            {% comment %} box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); {% endcomment %}
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        @media (max-width: 780px) {
+            .container {
+                box-shadow: none;
+                /* Remove box shadow on smaller screens */
+            }
+        }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .sop-item {
             margin-bottom: 20px;
             padding: 20px;
@@ -31,35 +62,40 @@
             border-radius: 5px;
             position: relative;
         }
+
         .sop-item h2 {
             margin-bottom: 10px;
             font-size: 18px;
         }
+
         .sop-item p {
-            margin-bottom: 5px;
+            margin-bottom: 12px;
         }
+
         .sop-item .icon {
             position: absolute;
             top: 10px;
             right: 10px;
-            color: #f74242;
+            color: #3f76ef;
         }
     </style>
 </head>
+
 <body>
-    <div class="container " style="color: #f74242;">
+    <div class="container ">
         <h1>SOP</h1>
         {% if sop_list %}
-            {% for sop in sop_list %}
-                <div class="sop-item">
-                    <h2>{{ sop.sopvalue| safe }}</h2>
-                    <p><i class="fas fa-building icon"></i><strong>Company:</strong> {{ sop.sop_company }}</p>
-                    <p><i class="fas fa-user-tie icon"></i><strong>Department:</strong> {{ sop.sop_dept }}</p>
-                </div>
-            {% endfor %}
+        {% for sop in sop_list %}
+        <div class="sop-item">
+            <h2>{{ sop.sopvalue| safe }}</h2>
+            <p><i class="fas fa-building icon"></i><strong>Company:</strong> {{ sop.sop_company }}</p>
+            <p><i class="fas fa-user-tie icon"></i><strong>Department:</strong> {{ sop.sop_dept }}</p>
+        </div>
+        {% endfor %}
         {% else %}
-            <p>No SOPs found for your company and department.</p>
+        <p>No SOPs found for your company and department.</p>
         {% endif %}
     </div>
 </body>
+
 </html>

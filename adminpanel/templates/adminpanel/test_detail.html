@@ -9,7 +9,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
         }
@@ -17,10 +16,16 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 780px) {
+            .container {
+                box-shadow: none;
+                /* Remove box shadow on smaller screens */
+            }
         }
 
         h2 {
@@ -55,7 +60,7 @@
             display: block;
             width: 100%;
             padding: 10px 20px;
-            background-color: #f74242;
+            background-color: #3f76ef;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -66,7 +71,7 @@
         }
 
         button[type="submit"]:hover {
-            background-color: #f74242;
+            background-color: #1655de;
             /* Darker blue color on hover */
         }
     </style>

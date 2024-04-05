@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,47 +10,101 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            {% comment %} background-color: #f4f4f4; {% endcomment %}
+
+                {
+                % comment %
+            }
+
+            background-color: #f4f4f4;
+
+                {
+                % endcomment %
+            }
+
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 1200px;
             max-height: 1200px;
             margin: 50px auto;
             padding: 20px;
-            {% comment %} background-color: #fff; {% endcomment %}
+
+                {
+                % comment %
+            }
+
+            background-color: #fff;
+
+                {
+                % endcomment %
+            }
+
             border-radius: 5px;
-            {% comment %} box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); {% endcomment %}
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        @media (max-width: 780px) {
+            .container {
+                box-shadow: none;
+                /* Remove box shadow on smaller screens */
+            }
+        }
+
         form {
             margin-top: 20px;
         }
+
         .ck-editor__editable {
-            min-height: 300px; /* Adjust as needed */
+            min-height: 300px;
+            /* Adjust as needed */
         }
+
         button[type="submit"] {
             display: block;
             width: 100%;
             padding: 10px 20px;
-            background-color: #f74242;
+            background-color: #3f76ef;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
+
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        /* Style for the label */
+        label[for="sop_dept"] {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: larger;
+            /* Adjust the color as needed */
+        }
+
+        /* Style for the input */
+        input[type="text"]#sop_dept {
+            width: 30%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+            /* Add any additional styles you want */
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1 style="text-align: center;">Create SOP</h1>
         <form action="/create-sop/" method="post">
             {% csrf_token %}
-            <label for="sop_dept">dept:</label>
+            <label for="sop_dept"><b>Department:</b></label>
             <input type="text" name="sop_dept" id="sop_dept">
             <textarea id="create_sop" name="create_sop">{{ request.POST.create_sop }}</textarea>
             <button type="submit">Submit</button>
@@ -59,10 +114,11 @@
     <!-- Ensure CKEditor Initialization is after CKEditor script -->
     <script>
         ClassicEditor
-            .create( document.querySelector( '#create_sop' ) )
-            .catch( error => {
-                console.error( error );
-            } );
+            .create(document.querySelector('#create_sop'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 </body>
+
 </html>

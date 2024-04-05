@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,47 +11,66 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            {% comment %} background-color: #f4f4f4; {% endcomment %}
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-            {% comment %} background-color: #fff; {% endcomment %}
             border-radius: 5px;
-            {% comment %} box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); {% endcomment %}
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        @media (max-width: 780px) {
+            .container {
+                box-shadow: none;
+                /* Remove box shadow on smaller screens */
+            }
+        }
+
         form {
             margin-top: 20px;
         }
+
         .ck-editor__editable {
-            min-height: 300px; /* Adjust as needed */
+            min-height: 300px;
+            /* Adjust as needed */
         }
+
         button[type="submit"] {
             display: block;
-            width: 100px; /* Reduced button width */
-            margin: 20px auto; /* Center the button */
-            padding: 8px 16px; /* Reduced button padding */
-            background-color: #f74242;
+            width: 100px;
+            /* Reduced button width */
+            margin: 20px auto;
+            /* Center the button */
+            padding: 8px 16px;
+            /* Reduced button padding */
+            background-color: #3f76ef;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px; /* Reduced font size */
+            font-size: 14px;
+            /* Reduced font size */
         }
+
         button[type="submit"] i {
-            margin-right: 5px; /* Add space between icon and text */
+            margin-right: 5px;
+            /* Add space between icon and text */
         }
+
         button[type="submit"]:hover {
-            background-color: #ff5e5e; /* Lighter color on hover */
+            background-color: #1456e6;
+            /* Lighter color on hover */
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1 style="text-align: center; color: #f74242;"><i class="fas fa-bell"></i> Create Alert</h1>
+        <h1 style="text-align: center; color: #d80e0e;"><i class="fas fa-bell"></i> Create Alert</h1>
         <form action="/create-alert/" method="post">
             {% csrf_token %}
             <textarea id="alert_value" name="alert_value">{{ request.POST.alert_value }}</textarea>
@@ -61,10 +81,11 @@
     <!-- Ensure CKEditor Initialization is after CKEditor script -->
     <script>
         ClassicEditor
-            .create( document.querySelector( '#alert_value' ) )
-            .catch( error => {
-                console.error( error );
-            } );
+            .create(document.querySelector('#alert_value'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 </body>
+
 </html>

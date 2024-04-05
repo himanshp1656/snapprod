@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,91 +9,108 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            /* background-color: #f8f9fa; */
             margin: 0;
             padding: 20px;
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
-            {% comment %} background-color: #fff; {% endcomment %}
+            /* background-color: #fff; */
             padding: 30px;
             border-radius: 10px;
-            {% comment %} box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); {% endcomment %}
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
             color: #343a40;
         }
+
         p {
             margin-bottom: 15px;
             color: #6c757d;
         }
+
         .acknowledge-form {
             text-align: center;
             margin-top: 20px;
         }
+
         .acknowledge-button {
             padding: 10px 30px;
-            background-color: #f74242;
+            background-color: #3f76ef;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         .acknowledge-button:hover {
-            background-color: #f74242;
+            background-color: #1954d3;
         }
+
         .icon {
             margin-right: 10px;
-            color: #f74242;
+            color: #3f76ef;
         }
+
         .acknowledge-button,
         .delete-button {
             padding: 10px 30px;
-            background-color: #f74242;
+            background-color: #3f76ef;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         .acknowledge-button:hover,
         .delete-button:hover {
-            background-color: #f74242;
+            background-color: #134ece;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="del" style="display: flex; margin: 10px;  justify-content: center;">
 
-        
-        <h1 style="margin-right: 10px;">Alert</h1>
+
+            <h1 style="margin-right: 10px;">Alert</h1>
+
+        </div>
+
+        {{ alert.alertvalue|safe }}
         {% if usertype == 'admin' %}
-        <form action="/deletealert/{{ alert.pk }}/" method="post" class="acknowledge-form">
-            {% csrf_token %}
-            <input type="hidden" name="delete" value="delete">
-            <button type="submit" class="delete-button"><i class="fas fa-trash-alt icon" style="color: #fff;"></i> Delete</button>
-        </form>
+        <p><i class="fas fa-eye icon"></i> Seen By: {{ alert.seen_by }}</p>
+        <p><i class="fas fa-user-check icon"></i> Acknowledged By: {{ alert.acknowledge_by }}</p>
         {% endif %}
-    </div>
-        {% if usertype == 'admin' %}
-            <p><i class="fas fa-eye icon"></i> Seen By: {{ alert.seen_by }}</p>
-            <p><i class="fas fa-user-check icon"></i> Acknowledged By: {{ alert.acknowledge_by }}</p>
-        {% endif %}
-        <p><strong>Alert:</strong> {{ alert.alertvalue|safe }}</p>
         <!-- Add more details as needed -->
         <form action="/alerts/{{ alert.pk }}/" method="post" class="acknowledge-form">
             {% csrf_token %}
             <input type="hidden" name="acknowledge" value="acknowledge">
-            <button type="submit" class="acknowledge-button"><i class="fas fa-check-circle icon" style="color: #fff;"></i> Acknowledge</button>
+            <button type="submit" class="acknowledge-button"><i class="fas fa-check-circle icon"
+                    style="color: #fff;"></i> Acknowledge</button>
         </form>
 
-        
+        {% if usertype == 'admin' %}
+        <form action="/deletealert/{{ alert.pk }}/" method="post" class="acknowledge-form">
+            {% csrf_token %}
+            <input type="hidden" name="delete" value="delete">
+            <button type="submit" class="delete-button" style="background-color: red;"><i class="fas fa-trash-alt icon"
+                    style="color: #fff;"></i>
+                Delete</button>
+        </form>
+        {% endif %}
+
+
     </div>
-    
+
 </body>
+
 </html>

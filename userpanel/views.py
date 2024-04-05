@@ -220,7 +220,7 @@ def auditReports(request):
     
     # change
     # Pass the first name, last name, and audit_forms to the template
-    return render(request, 'userpanel/audit1.html', {'audit_forms': zip(audit_forms, quality_scores)})
+    return render(request, 'userpanel/audit_reports.html', {'audit_forms': zip(audit_forms, quality_scores)})
 
 
 

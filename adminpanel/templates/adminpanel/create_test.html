@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            /* background-color: #f4f4f4; */
             margin: 0;
             padding: 20px;
         }
@@ -17,11 +17,18 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #fff;
+            /* background-color: #fff; */
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
+        }
+
+        @media (max-width: 780px) {
+            .container {
+                box-shadow: none;
+                /* Remove box shadow on smaller screens */
+            }
         }
 
         h2 {
@@ -45,7 +52,8 @@
         input[type="text"] {
             width: calc(100% - 10px);
             padding: 8px;
-            margin-bottom: 5px;
+            margin-bottom: 12px;
+            /* margin-top: 12px; */
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -54,7 +62,7 @@
             width: calc(25% - 10px);
             padding: 8px;
             margin-right: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -71,11 +79,12 @@
         .correct-answer {
             display: flex;
             align-items: center;
-            margin-top: 5px;
+            margin-bottom: 12px;
         }
 
         .correct-answer input[type="radio"] {
             margin-right: 5px;
+            margin-bottom: 12px;
             /* Hide the default radio buttons */
         }
 
@@ -86,7 +95,7 @@
 
         button {
             padding: 10px 20px;
-            background-color: #f74242;
+            background-color: #3f76ef;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -96,7 +105,7 @@
         }
 
         button:hover {
-            background-color: #f74242;
+            background-color: #0d53e9;
             /* Darker blue color on hover */
         }
 

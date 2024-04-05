@@ -1,277 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Profile</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-      }
 
-      .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #f4f4f4;
-        border-radius: 5px;
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      /* background-color: #f4f4f4; */
+    }
 
-      .profile-info {
-        text-align: center;
-        margin-bottom: 20px;
-      }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      /* background-color: #f4f4f4; */
+      border-radius: 5px;
+      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    }
 
-      .profile-info h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
+    .profile-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-      .profile-info span {
-        font-weight: bold;
-        color: #333;
-      }
+    .profile-info h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
 
-      .graph-heading {
-        font-size: 20px;
-        margin-bottom: 10px;
-        color: #333;
-      }
+    .profile-info span {
+      font-weight: bold;
+      color: #333;
+    }
 
-      .chart-container {
-        position: relative;
-        margin-bottom: 20px;
-        height: 400px;
-      }
+    .graph-heading {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #333;
+    }
 
-      canvas {
-        max-width: 100%;
-        border-radius: 5px;
-      }
+    .chart-container {
+      position: relative;
+      margin-bottom: 20px;
+      height: 400px;
+    }
 
-      .form-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-      }
+    canvas {
+      max-width: 100%;
+      border-radius: 5px;
+    }
 
-      .form-container label {
-        display: none;
-        /* Hide the labels */
-      }
+    .form-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
 
-      .form-container input[type="date"],
-      .form-container input[type="submit"] {
-        padding: 10px;
-        margin: 0 5px;
-        /* Add some spacing between elements */
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
+    .form-container label {
+      display: none;
+      /* Hide the labels */
+    }
 
-      .form-container input[type="date"] {
-        width: 30%;
-        /* Adjust the width of the date inputs */
-      }
+    .form-container input[type="date"],
+    .form-container input[type="submit"] {
+      padding: 10px;
+      margin: 0 5px;
+      /* Add some spacing between elements */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
 
-      .form-container input[type="submit"] {
-        background-color: #f74242;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-      }
+    .form-container input[type="date"] {
+      width: 30%;
+      /* Adjust the width of the date inputs */
+    }
 
-      .form-container input[type="submit"]:hover {
-        background-color: #f74242;
-      }
+    .form-container input[type="submit"] {
+      background-color: #3c74ed;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
 
-      .form-group {
-        margin-bottom: 20px;
-      }
+    .form-container input[type="submit"]:hover {
+      background-color: #1d5ce5;
+    }
 
-      .form-control {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        width: 100%;
-      }
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-      .btn {
-        background-color: #f74242;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        padding: 10px 20px;
-        border-radius: 4px;
-      }
+    .form-control {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      width: 100%;
+    }
 
-      .btn:hover {
-        background-color: #f22;
-      }
+    .btn {
+      background-color: #3c74ed;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 4px;
+    }
 
-      .logout-btn {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        padding: 10px 20px;
-        border-radius: 4px;
-        text-decoration: none;
-        display: inline-block;
-      }
+    .btn:hover {
+      background-color: #1d5ce5;
+    }
 
-      .logout-btn:hover {
-        background-color: #555;
-      }
-    </style>
-  </head>
+    .logout-btn {
+      background-color: #ed3c3c;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-  <body>
-    <div class="container" style="color: #f74242">
-      <div class="profile-info">
-        <h1 style="color: #f74242">
-          Welcome,
-          <span style="color: #f74242"
-            >{{ user.first_name }} {{ user.last_name }}</span
-          >
-        </h1>
-        <a href="/logout" class="logout-btn">Logout</a>
-      </div>
-      <div class="container1">
-        <form action="/updateprofile/" method="post">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="first_name">First Name:</label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              value="{{ user.first_name }}"
-              class="form-control"
-            />
-          </div>
+    .logout-btn:hover {
+      background-color: #d82e2e;
+    }
+  </style>
+</head>
 
-          <div class="form-group">
-            <label for="last_name">Last Name:</label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              value="{{ user.last_name }}"
-              class="form-control"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value="{{ user.email }}"
-              class="form-control"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value="{{ user.username }}"
-              class="form-control"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              class="form-control"
-            />
-          </div>
-
-          <button type="submit" class="btn btn-primary">Update</button>
-        </form>
-      </div>
-
-      <div class="form-container">
-        <form method="post">
-          {% csrf_token %}
-          <label for="start-date">Select Start Date:</label>
-          <input
-            type="date"
-            id="start-date"
-            name="start_date"
-            value="{{ default_start_date }}"
-            max="{{ max_end_date }}"
-            required
-          />
-          <label for="end-date">Select End Date:</label>
-          <input
-            type="date"
-            id="end-date"
-            name="end_date"
-            value="{{ default_end_date }}"
-            min="{{ min_start_date }}"
-            max="{{ max_end_date }}"
-            required
-          />
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-
-      <div class="graph-heading" style="color: #f74242">
-        <i class="fa fa-line-chart"></i> Form Submission
-      </div>
-      <div class="chart-container">
-        <canvas id="form-submission-chart"></canvas>
-      </div>
+<body>
+  <div class="container" style="color: #030408">
+    <div class="profile-info">
+      <h1 style="color: #030408">
+        Welcome,
+        <span style="color: #030408">{{ user.first_name }} {{ user.last_name }}</span>
+      </h1>
+      <a href="/logout" class="logout-btn">Logout</a>
     </div>
-    <!-- Add other graphs or data as needed -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          // Form submission details data
-          var formSubmissionLabels = [{% for date in dates %}"{{ date }}", {% endfor %}];
-          var formSubmissionCounts = [{% for count in counts %}{{ count }}, {% endfor %}];
+    <div class="container1">
+      <form action="/updateprofile/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="first_name">First Name:</label>
+          <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="form-control" />
+        </div>
 
-      // Create form submission chart
-      var formSubmissionChartCanvas = document.getElementById('form-submission-chart').getContext('2d');
-      var formSubmissionChart = new Chart(formSubmissionChartCanvas, {
-          type: 'bar',
-          data: {
-              labels: formSubmissionLabels,
-              datasets: [{
-                  label: 'Number of Form Submissions',
-                  data: formSubmissionCounts,
-                  backgroundColor: 'rgba(220, 53, 69, 0.2)',
-                  borderColor: 'rgba(220, 53, 69, 1)',
-                  borderWidth: 1
-              }]
-          },
-          options: {
+        <div class="form-group">
+          <label for="last_name">Last Name:</label>
+          <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="form-control" />
+        </div>
 
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" value="{{ user.username }}" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+
+    <div class="form-container">
+      <form method="post">
+        {% csrf_token %}
+        <label for="start-date">Select Start Date:</label>
+        <input style="width: 120px;" type="date" id="start-date" name="start_date" value="{{ default_start_date }}"
+          max="{{ max_end_date }}" required />
+        <label for="end-date">Select End Date:</label>
+        <input style="width: 120px;" type="date" id="end-date" name="end_date" value="{{ default_end_date }}"
+          min="{{ min_start_date }}" max="{{ max_end_date }}" required />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+
+    <div class="graph-heading" style="color: #030408">
+      <i class="fa fa-line-chart"></i> Form Submission
+    </div>
+    <div class="chart-container">
+      <canvas id="form-submission-chart"></canvas>
+    </div>
+  </div>
+  <!-- Add other graphs or data as needed -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Form submission details data
+      var formSubmissionLabels = [{% for date in dates %}"{{ date }}", {% endfor %}];
+    var formSubmissionCounts = [{% for count in counts %}"{{ count }}", {% endfor %}];
+
+    // Create form submission chart
+    var formSubmissionChartCanvas = document.getElementById('form-submission-chart').getContext('2d');
+    var formSubmissionChart = new Chart(formSubmissionChartCanvas, {
+      type: 'bar',
+      data: {
+        labels: formSubmissionLabels,
+        datasets: [{
+          label: 'Number of Form Submissions',
+          data: formSubmissionCounts,
+          backgroundColor: 'rgba(61, 133, 42, 0.2)',
+          borderColor: 'rgba(61, 133, 42, 2)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+
+        scales: {
+          y: {
+            beginAtZero: true
           }
+        }
+      }
+    });
       });
-      });
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
