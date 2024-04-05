@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        h2 {
+            text-align: center;
+
+        }
+
+        form {
+            margin-top: 20px;
+
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            /* color: #333;  */
+
+        }
+
+        input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .option input[type="text"] {
+            width: calc(25% - 10px);
+            padding: 8px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .option input[type="text"]:last-child {
+            margin-right: 0;
+        }
+
+        .option {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .correct-answer {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .correct-answer input[type="radio"] {
+            margin-right: 5px;
+            /* Hide the default radio buttons */
+        }
+
+        .correct-answer i {
+            margin-right: 5px;
+
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #f74242;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #f74242;
+            /* Darker blue color on hover */
+        }
+
+        #addQuestion {
+            margin-bottom: 20px;
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2><i class="fas fa-pen"></i> Create Test Form</h2>
+
+        <form action="/create-test/" method="post" id="testForm">
+            {% csrf_token %}
+            <label for="testname"><i class="fas fa-edit"></i> Test Name:</label>
+            <input type="text" id="testname" name="testname" required>
+            <label for="department"><i class="fas fa-building"></i> Department:</label>
+            <input type="text" id="department" name="department" required>
+            <div id="questions">
+                <div class="question">
+                    <label for="question1"><i class="fas fa-question"></i> Question 1:</label>
+                    <input type="text" id="question1" name="question1" required>
+                    <div class="option">
+                        <input type="text" name="option11" required>
+                        <input type="text" name="option12" required>
+                        <input type="text" name="option13" required>
+                        <input type="text" name="option14" required>
+                        <div class="correct-answer">
+                            <i class="fas fa-check-circle"></i> <span>Correct Answer: </span>
+                            <input type="radio" name="correct_answer1" value="1" required>
+                            <input type="radio" name="correct_answer1" value="2">
+                            <input type="radio" name="correct_answer1" value="3">
+                            <input type="radio" name="correct_answer1" value="4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="addQuestion"><i class="fas fa-plus-circle"></i> Add Question</button>
+            <button type="submit"><i class="fas fa-paper-plane"></i> Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('addQuestion').addEventListener('click', function () {
+            var questionsContainer = document.getElementById('questions');
+            var questionCount = questionsContainer.childElementCount + 1;
+
+            var newQuestion = document.createElement('div');
+            newQuestion.classList.add('question');
+            newQuestion.innerHTML = `
+                <label for="question${questionCount}"><i class="fas fa-question"></i> Question ${questionCount}:</label>
+                <input type="text" id="question${questionCount}" name="question${questionCount}" required>
+                <div class="option">
+                    <input type="text" name="option${questionCount}1" required>
+                    <input type="text" name="option${questionCount}2" required>
+                    <input type="text" name="option${questionCount}3" required>
+                    <input type="text" name="option${questionCount}4" required>
+                    <div class="correct-answer">
+                        <i class="fas fa-check-circle"></i> <span>Correct Answer: </span>
+                        <input type="radio" name="correct_answer${questionCount}" value="1" required>
+                        <input type="radio" name="correct_answer${questionCount}" value="2">
+                        <input type="radio" name="correct_answer${questionCount}" value="3">
+                        <input type="radio" name="correct_answer${questionCount}" value="4">
+                    </div>
+                </div>
+            `;
+            questionsContainer.appendChild(newQuestion);
+        });
+    </script>
+</body>
+
+</html>

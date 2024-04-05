@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ audit_form.sessionid }} Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        p {
+            margin: 5px 0;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .audit-details {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .audit-details p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .icon {
+            margin-right: 10px;
+            color: #007bff;
+        }
+        .audit-details strong {
+            margin-right: 10px;
+            width: 180px;
+        }
+        .audit-details p {
+            margin-bottom: 10px;
+        }
+        .audit-details p:last-child {
+            margin-bottom: 0;
+        }
+        .audit-details p:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 768px) {
+            .audit-details strong {
+                width: 120px;
+            }
+        }
+        .audit-details {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .icon {
+            margin-right: 10px;
+            color: #f74242;
+        }
+        .audit-details strong {
+            margin-right: 10px;
+            width: 200px; /* Adjust as needed */
+            font-weight: bold;
+        }
+        .audit-details p {
+            margin-bottom: 10px;
+        }
+        .audit-details p:last-child {
+            margin-bottom: 0;
+        }
+        .audit-details p:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 768px) {
+            .audit-details strong {
+                width: 150px; /* Adjust as needed */
+            }
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #f74242;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #f74242; /* Darker blue color on hover */
+        }  
+    </style>
+</head>
+<body>
+    <h1>{{ audit_form.sessionid }} Details</h1>
+    
+            <div class="audit-details">
+                <form action="/recheck/{{ audit_form.sessionid }}/" method="post">
+                    {% csrf_token %}
+                    
+                    <p><input type="checkbox" id="agentid" name="fields" value="agentid" {% if audit_form.recheck == 'True' and 'agentid' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="agentid">Agent ID: {{ audit_form.Agent_ID }}</label></p>
+                    
+                    <p><input type="checkbox" id="saleownername" name="fields" value="saleownername" {% if audit_form.recheck == 'True' and 'saleownername' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="saleownername">Sale Owner Name: {{ audit_form.Sale_Owner_Name }}</label></p>
+                    
+                    <p><input type="checkbox" id="responsibleadvisorname" name="fields" value="responsibleadvisorname" {% if audit_form.recheck == 'True' and 'responsibleadvisorname' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="responsibleadvisorname">Responsible Advisor Name: {{ audit_form.Responsible_advisor_Name }}</label></p>
+                    
+                    <p><input type="checkbox" id="encryptedmobile" name="fields" value="encryptedmobile" {% if audit_form.recheck == 'True' and 'encryptedmobile' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="encryptedmobile">Encrypted Mobile: {{ audit_form.Encrypted_Mobile }}</label></p>
+                    
+                    <p><input type="checkbox" id="disposition" name="fields" value="disposition" {% if audit_form.recheck == 'True' and 'disposition' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="disposition">Disposition: {{ audit_form.Disposition }}</label></p>
+                    
+                    <p><input type="checkbox" id="isdispositioncorrect" name="fields" value="isdispositioncorrect" {% if audit_form.recheck == 'True' and 'isdispositioncorrect' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="isdispositioncorrect">Is Disposition Correct: {{ audit_form.Is_Disposition_Correct }}</label></p>
+                    
+                    <p><input type="checkbox" id="correctdisposition" name="fields" value="correctdisposition" {% if audit_form.recheck == 'True' and 'correctdisposition' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="correctdisposition">Correct Disposition: {{ audit_form.Correct_Disposition }}</label></p>
+                    
+                    <p><input type="checkbox" id="nirostage" name="fields" value="nirostage" {% if audit_form.recheck == 'True' and 'nirostage' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="nirostage">Niro Stage: {{ audit_form.Niro_Stage }}</label></p>
+                    
+                    <p><input type="checkbox" id="saledone" name="fields" value="saledone" {% if audit_form.recheck == 'True' and 'saledone' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="saledone">Sale Done: {{ audit_form.Sale_Done }}</label></p>
+                    
+                    <p><input type="checkbox" id="customerintent" name="fields" value="customerintent" {% if audit_form.recheck == 'True' and 'customerintent' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="customerintent">Customer Intent: {{ audit_form.Customer_Intent }}</label></p>
+                    
+                    <p><input type="checkbox" id="p1needcreation" name="fields" value="p1needcreation" {% if audit_form.recheck == 'True' and 'p1needcreation' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="p1needcreation">P1 Need Creation: {{ audit_form.P1_Need_Creation }}</label></p>
+                    
+                    <p><input type="checkbox" id="p2benefitselling" name="fields" value="p2benefitselling" {% if audit_form.recheck == 'True' and 'p2benefitselling' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="p2benefitselling">P2 Benefit Selling: {{ audit_form.P2_Benefit_Selling }}</label></p>
+                    
+                    <p><input type="checkbox" id="p3eligibilitycheck" name="fields" value="p3eligibilitycheck" {% if audit_form.recheck == 'True' and 'p3eligibilitycheck' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="p3eligibilitycheck">P3 Eligibility Check: {{ audit_form.P3_Eligibility_Check }}</label></p>
+                    
+                    <p><input type="checkbox" id="p4applicationfillingsteps" name="fields" value="p4applicationfillingsteps" {% if audit_form.recheck == 'True' and 'p4applicationfillingsteps' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="p4applicationfillingsteps">P4 Application Filling Steps: {{ audit_form.P4_Application_filling_steps }}</label></p>
+                    
+                    <p><input type="checkbox" id="p5bankselfieuploadsteps" name="fields" value="p5bankselfieuploadsteps" {% if audit_form.recheck == 'True' and 'p5bankselfieuploadsteps' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="p5bankselfieuploadsteps">P5 Bank Selfie Upload Steps: {{ audit_form.P5_Bank_selfie_upload_steps }}</label></p>
+                    
+                    <p><input type="checkbox" id="rejectionreason" name="fields" value="rejectionreason" {% if audit_form.recheck == 'True' and 'rejectionreason' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="rejectionreason">Rejection Reason: {{ audit_form.Rejection_Reason }}</label></p>
+                    
+                    <p><input type="checkbox" id="advisorerromajor" name="fields" value="advisorerromajor" {% if audit_form.recheck == 'True' and 'advisorerromajor' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="advisorerromajor">Advisor Error Major: {{ audit_form.Advisor_Error_Major }}</label></p>
+                    
+                    <p><input type="checkbox" id="advisorerrominor" name="fields" value="advisorerrominor" {% if audit_form.recheck == 'True' and 'advisorerrominor' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="advisorerrominor">Advisor Error Minor: {{ audit_form.Advisor_Error_Minor }}</label></p>
+                    
+                    <p><input type="checkbox" id="advisorerrofatal" name="fields" value="advisorerrofatal" {% if audit_form.recheck == 'True' and 'advisorerrofatal' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="advisorerrofatal">Advisor Error Fatal: {{ audit_form.Advisor_Error_Fatal }}</label></p>
+                    
+                    <p><input type="checkbox" id="fatal" name="fields" value="fatal" {% if audit_form.recheck == 'True' and 'fatal' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="fatal">Fatal: {{ audit_form.fatal }}</label></p>
+                    
+                    <p><input type="checkbox" id="anyrudetone" name="fields" value="anyrudetone" {% if audit_form.recheck == 'True' and 'anyrudetone' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="anyrudetone">Any Rude Tone: {{ audit_form.Any_rude_Tone }}</label></p>
+                    
+                    <p><input type="checkbox" id="mentionprocessgap" name="fields" value="mentionprocessgap" {% if audit_form.recheck == 'True' and 'mentionprocessgap' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="mentionprocessgap">Mention Process Gap: {{ audit_form.Mention_Process_Gap }}</label></p>
+                    
+                    <p><input type="checkbox" id="callobservations" name="fields" value="callobservations" {% if audit_form.recheck == 'True' and 'callobservations' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="callobservations">Call Observations: {{ audit_form.Call_Observations }}</label></p>
+                    
+                    <p><input type="checkbox" id="mentiongoodpractice" name="fields" value="mentiongoodpractice" {% if audit_form.recheck == 'True' and 'mentiongoodpractice' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="mentiongoodpractice">Mention Good Practice: {{ audit_form.Mention_Good_Practice }}</label></p>
+                    
+                    <p><input type="checkbox" id="offerspitched" name="fields" value="offerspitched" {% if audit_form.recheck == 'True' and 'offerspitched' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="offerspitched">Offers Pitched: {{ audit_form.Offers_Pitched }}</label></p>
+                    
+                    <p><input type="checkbox" id="remarksforoffererrors" name="fields" value="remarksforoffererrors" {% if audit_form.recheck == 'True' and 'remarksforoffererrors' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="remarksforoffererrors">Remarks For Offer Errors: {{ audit_form.Remarks_For_Offer_Errors }}</label></p>
+                    
+                    <p><input type="checkbox" id="dtfollowed" name="fields" value="dtfollowed" {% if audit_form.recheck == 'True' and 'dtfollowed' in audit_form.correction_field %} checked {% endif %}>
+                        <label for="dtfollowed">DT Followed: {{ audit_form.DT_Followed }}</label></p>
+                    
+                        <p><input type="checkbox" id="incorrectdterrorremarks" name="fields" value="incorrectdterrorremarks" {% if audit_form.recheck == 'True' and 'incorrectdterrorremarks' in audit_form.correction_field %} checked {% endif %}>
+                            <label for="incorrectdterrorremarks">Incorrect DT Error Remarks: {{ audit_form.incorrect_DT_error_Remarks }}</label></p>
+            {% if audit_form.recheck != 'done' %}
+                <input type="hidden" name="recheck" id="recheck">
+                <button type="submit">Send for recheck</button>
+                {% endif %}
+            </form>
+        </div>
+        
+    </div>
+
+</body>
+</html>

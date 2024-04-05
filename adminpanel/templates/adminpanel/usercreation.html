@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Excel File</title>
+</head>
+<body>
+    <h2>Upload Excel File</h2>
+    {% if success %}
+    <h2>Upload Successful</h2>
+    <p>{{ success_message }}</p>
+    {% endif %}
+    <form action="/usercreation/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" accept=".xls,.xlsx" required>
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>

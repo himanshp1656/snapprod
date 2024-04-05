@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f2f2f2;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+            display: inline-block;
+        }
+        button {
+            background-color: #f74242;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #f74242;
+        }
+        .radio-group {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+        .radio-group input[type="radio"] {
+            display: none;
+        }
+        .radio-group label {
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            padding-left: 25px; 
+            margin-right: 10px; 
+        }
+        .radio-group label:before {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 1px;
+        }
+        .radio-group input[type="radio"]:checked + label:before {
+            background-color: #f74242; 
+        }
+        .radio-group label:after {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #fff;
+            position: absolute;
+            left: 4px;
+            top: 5px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .radio-group input[type="radio"]:checked + label:after {
+            opacity: 1;
+        }
+    </style>
+    
+</head>
+<body>
+    <h2>NIRO Audit Form</h2>
+    <form action="/auditformniro/" method="post">
+        {% csrf_token %}
+        <label for="audittype">Audit Type:</label>
+        <select id="audittype" name="audittype">
+            <option value="">Choose</option>
+            <option value="salesdone">Sales Done</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Not Interested">Not Interested</option>
+            <option value="Others">Others</option>
+            <option value="Calibration">Calibration</option>
+        </select>
+        <label for="sessionid">Session ID:</label>
+        <input type="text" id="sessionid" name="sessionid">
+        <label for="callstartday">Call Start Day:</label>
+        <input type="date" name="callstartday" id="callstartday" value="2024-03-01">
+
+        <label for="Agent_ID">Agent ID:</label>
+        <input type="text" name="Agent_ID" id="Agent_ID" >
+        <label for="Sale_Owner_Name">Sale Owner Name:</label>
+        <select name="Sale_Owner_Name" id="Sale_Owner_Name">
+            <option value="">Choose</option>
+            {% for user in users %}
+    <option value="{{ user.user.username }}">{{ user.user.username }}</option>
+    {% endfor %}
+        </select>
+        <label for="Responsible_advisor_Name">Responsible Advisor Name:</label>
+        <select name="Responsible_advisor_Name" id="Responsible_advisor_Name">
+            <option value="">Choose</option>
+            {% for user in users %}
+    <option value="{{ user.user.username }}">{{ user.user.username }}</option>
+    {% endfor %}
+        </select>
+        <label for="Encrypted_Mobile">Encrypted Mobile:</label>
+        <input type="text" name="Encrypted_Mobile" id="Encrypted_Mobile">
+        <label for="Disposition">Disposition:</label>
+        <select name="Disposition" id="Disposition">
+            <option value="">Choose</option>
+            <option value="Interested_Nach_failed">Interested_Nach_failed</option>
+            <option value="sale_done">sale_done</option>
+            <option value="Intereseted_offer_expired">Intereseted_offer_expired</option>
+            <option value="Interested_not_eligible">Interested_not_eligible</option>
+            <option value="call_back">call_back</option>
+            <option value="interested_follow_up">interested_follow_up</option>
+            <option value="not_interested">not_interested</option>
+            <option value="dnd">dnd</option>
+            <option value="interested_wants_high_amount">interested_wants_high_amount</option>
+            <option value="sale_done/dnd">sale_done/dnd</option>
+            <option value="lead_lost_high_interest_rate">lead_lost_high_interest_rate</option>
+            <option value="not_eligible">not_eligible</option>
+            <option value="no_tagging_done">no_tagging_done</option>
+            <option value="lead_lost_pin_code_issue">lead_lost_pin_code_issue</option>
+            <option value="not_available_rnr">not_available_rnr</option>
+            <option value="language_barrier">language_barrier</option>
+            <option value="already_application_submitted">already_application_submitted</option>
+            <option value="others">others</option>
+        </select>
+        
+        <label for="Is_Disposition_Correct">Is Disposition Correct:</label>
+        <label for="Yes_Correct">Yes</label>
+        <input type="radio" name="Is_Disposition_Correct" id="Yes_Correct" value="Yes">
+        <label for="No_Correct">No</label>
+        <input type="radio" name="Is_Disposition_Correct" id="No_Correct" value="No">
+        <label for="Correct_Disposition">Correct Disposition:</label>
+        <select name="Correct_Disposition" id="Correct_Disposition">
+            <option value="">Choose</option>
+            <option value="Interested_Nach_failed">Interested_Nach_failed</option>
+            <option value="sale_done">sale_done</option>
+            <option value="Intereseted_offer_expired">Intereseted_offer_expired</option>
+            <option value="Interested_not_eligible">Interested_not_eligible</option>
+            <option value="call_back">call_back</option>
+            <option value="interested_fillo_up">interested_fillo_up</option>
+            <option value="not_interested">not_interested</option>
+            <option value="dnd">dnd</option>
+            <option value="interested_wants_high_amount">interested_wants_high_amount</option>
+            <option value="sale_done/dnd">sale_done/dnd</option>
+            <option value="lead_lost_high_interest_rate">lead_lost_high_interest_rate</option>
+            <option value="not_eligible">not_eligible</option>
+            <option value="lead_lost_pin_code_issue">lead_lost_pin_code_issue</option>
+            <option value="not_available_rnr">not_available_rnr</option>
+            <option value="language_barrier">language_barrier</option>
+            <option value="already_application_submitted">already_application_submitted</option>
+            <option value="wrong_customer">wrong_customer</option>
+            <option value="others">others</option>
+        </select>
+        
+        <label for="Niro_Stage">Niro Stage:</label>
+        <select name="Niro_Stage" id="Niro_Stage">
+            <option value="">Choose</option>
+            <option value="nach_awaited">nach_awaited</option>
+            <option value="selfie_verified">selfie_verified</option>
+            <option value="cpv_in_progress">cpv_in_progress</option>
+            <option value="telepd_customer_na">telepd_customer_na</option>
+            <option value="disbursal_pending">disbursal_pending</option>
+            <option value="mobile_veirified">mobile_veirified</option>
+            <option value="unclaimed">unclaimed</option>
+            <option value="okyc_completed">okyc_completed</option>
+            <option value="rejected">rejected</option>
+            <option value="pan_verified">pan_verified</option>
+            <option value="okyc_in_progress">okyc_in_progress</option>
+            <option value="disbursed">disbursed</option>
+            <option value="loan_offer_accepted">loan_offer_accepted</option>
+            <option value="ops_clearance_pending">ops_clearance_pending</option>
+            <option value="claimed_offer">claimed_offer</option>
+            <option value="address_entered">address_entered</option>
+            <option value="locked">locked</option>
+            <option value="ckyc_completed">ckyc_completed</option>
+            <option value="agreement_to_be_signed">agreement_to_be_signed</option>
+            <option value="selfie_veirification_pending">selfie_veirification_pending</option>
+            <option value="employment_details_added">employment_details_added</option>
+            <option value="cpv_clearance_pending">cpv_clearance_pending</option>
+            <option value="selfie_redo">selfie_redo</option>
+            <option value="await_response">await_response</option>
+            <option value="lender_eligibility_success">lender_eligibility_success</option>
+            <option value="cpv_to_be_initiated">cpv_to_be_initiated</option>
+            <option value="na">na</option>
+            <option value="nach_urn_generated">nach_urn_generated</option>
+            <option value="lender_eligibility_in_progress">lender_eligibility_in_progress</option>
+            <option value="claimed">claimed</option>
+        </select>
+        
+
+        <label for="Sale_Done">Sale Done:</label>
+        <div class="radio-group">
+            <input type="radio" name="Sale_Done" id="Sale_Done_Yes" value="Yes">
+            <label class="radio-label" for="Sale_Done_Yes">Yes</label>
+        </div>
+        <div class="radio-group">
+            <input type="radio" name="Sale_Done" id="Sale_Done_No" value="No">
+            <label class="radio-label" for="Sale_Done_No">No</label>
+        </div>
+        <div class="radio-group">
+            <input type="radio" name="Sale_Done" id="Sale_Already_Done" value="Sale Already Done">
+            <label class="radio-label" for="Sale_Already_Done">Sale Already Done</label>
+        </div>
+        
+
+
+        <label for="Customer_Intent">Customer Intent:</label>
+<div class="radio-group">
+    <input type="radio" name="Customer_Intent" id="Customer_Intent_Yes" value="Yes">
+    <label class="radio-label" for="Customer_Intent_Yes">Yes</label>
+</div>
+<div class="radio-group">
+    <input type="radio" name="Customer_Intent" id="Customer_Intent_No" value="No">
+    <label class="radio-label" for="Customer_Intent_No">No</label>
+</div>
+
+        <label for="P1_Need_Creation">P1 Need Creation:</label>
+        <select name="P1_Need_Creation" id="P1_Need_Creation">
+            <option value="H">H</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="P">P</option>
+            <option value="Na">Na</option>
+        </select>
+
+        <label for="P2_Benefit_Selling">P2 Benefit Selling:</label>
+        <select name="P2_Benefit_Selling" id="P2_Benefit_Selling">
+            <option value="H">H</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="P">P</option>
+            <option value="Na">Na</option>
+        </select>
+
+        <label for="P3_Eligibility_Check">P3 Eligibility Check:</label>
+        <select name="P3_Eligibility_Check" id="P3_Eligibility_Check">
+            <option value="H">H</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="P">P</option>
+            <option value="Na">Na</option>
+        </select>
+
+        <label for="P4_Application_filling_steps">P4 Application Filling Steps:</label>
+        <select name="P4_Application_filling_steps" id="P4_Application_filling_steps">
+            <option value="H">H</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="P">P</option>
+            <option value="Na">Na</option>
+        </select>
+
+        <label for="P5_Bank_&_selfie_upload_steps">P5 Bank & Selfie Upload Steps:</label>
+        <select name="P5_Bank_&_selfie_upload_steps" id="P5_Bank_&_selfie_upload_steps">
+            <option value="H">H</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="P">P</option>
+            <option value="Na">Na</option>
+        </select>
+
+        <label for="Rejection_Reason">Rejection Reason:</label>
+        <select name="Rejection_Reason" id="Rejection_Reason">
+    <option value="advisor_fault">advisor fault</option>
+    <option value="bank_statement_not_provided_by_customer">bank statement not provided by customer</option>
+    <option value="customer_didnt_responded_to_verification">customer didnt responded to verification</option>
+    <option value="employment_details_not_matched">employment details not matched</option>
+    <option value="bre_check_failed">bre check failed</option>
+    <option value="negetive_cpv_profile">negetive cpv/profile</option>
+    <option value="low_or_no_income_proof">low/no income proof</option>
+    <option value="pay_u_check_eligibility_failed">pay u check eligibility failed</option>
+    <option value="na">na</option>
+    <option value="sale_done_by_niro_team_due_to_language_barrier_case">sale done by niro team dur to language barrier case</option>
+    <option value="pin_code_not_servicable">pin code not servicable</option>
+    <option value="customer_requested_cancellation">cust requested cancellaton</option>
+    <option value="internal_bre_rejected">internal bre rejected: bre failed with rule xx,overage</option>
+    <option value="liquiloans_bre_check_failed">liquiloans bre check failed</option>
+    <option value="incorrect_info_or_dox_mismatched">incorrect info/dox mismatched</option>
+    <option value="user_entered_dob_does_not_match_cykc_or_okyc_dob">user enetered dob does not match cykc/okyc dob</option>
+    <option value="not_eligible_for_ltfs">not eligible for ltfs</option>
+    <option value="employment_verification_policy_check_failed">employment verification policy check failed</option>
+    <option value="others">others</option>
+</select>
+
+        <label for="Advisor_Error_Major">Advisor Error Major:</label>
+        <select name="Advisor_Error_Major" id="Advisor_Error_Major">
+            <option value="Advisor_didnt_inform_customer_about_offers">Advisor didn't inform customer about offers</option>
+            <option value="Pin_code_Serviceability_not_informed">Pin code Serviceability not informed</option>
+            <option value="Loan_features_not_informed">Loan features not informed</option>
+            <option value="Benefit_selling_not_done">Benefit selling not done</option>
+            <option value="Urgency_creation_not_done">Urgency creation not done</option>
+            <option value="Lender_Switch_Not_done">Lender Switch Not done</option>
+            <option value="Eligibility_criteria_not_checked">Eligibility criteria not checked</option>
+            <option value="NA">NA</option>
+            <option value="Didnt_Check_Right_Party">Didn't Check Right Party</option>
+            <option value="Appropriate_Rebuttal_Not_shared">Appropriate Rebuttal Not shared</option>
+            <option value="Whats_App_No_Not_Shared_with_C_and_D_Cat_Customer_For_Bank_statement">Whats App No. Not Shared with C & D Cat Customer For Bank statement</option>
+            <option value="Objectional_Handling_not_Done">Objectional Handling not Done</option>
+            <option value="Not_Pitched_Offers_Effectively">Not Pitched Offers Effectively</option>
+            <option value="Incomplete_selfie_guideline_informed">Incomplete selfie guideline informed</option>
+            <option value="Offer_Renewal_TAT_Not_Shared">Offer Renewal TAT Not Shared</option>
+            <option value="Didnt_Probe_for_all_troubleshooting_Steps_NACH_Failure">Didn't Probe for all troubleshooting Steps_ NACH Failure</option>
+            <option value="Partial_Benefit_Selling_Done">Partial Benefit Selling Done</option>
+            <option value="Incorrect_Eligibility_criteria">Incorrect Eligibility criteria</option>
+            <option value="Partial_Eligibility_Check_Done">Partial Eligibility Check Done</option>
+            <option value="Call_back_not_done">Call back not done</option>
+        </select>
+        
+
+        <label for="Advisor_Error_Minor">Advisor Error Minor:</label>
+        <select name="Advisor_Error_Minor" id="Advisor_Error_Minor">
+            <option value="Referrals_not_asked">Referrals not asked</option>
+            <option value="Tone_Modulation_Required">Tone Modulation Required</option>
+            <option value="Rate_of_speech">Rate of speech</option>
+            <option value="Fumbling">Fumbling</option>
+            <option value="Choice_of_words">Choice of words</option>
+            <option value="Not_Fluent_in_English_Langauge">Not Fluent in English Langauge</option>
+            <option value="Low_Confidence">Low Confidence</option>
+            <option value="Casual_tone">Casual tone</option>
+            <option value="Ice_or_ZTP_Observed">ice/ZTP Observed</option>
+            <option value="NA">NA</option>
+            <option value="Dead_air">Dead air</option>
+            <option value="Active_Listening_or_Interruptions">Active Listening / Interruptions</option>
+            <option value="Personalization_Missing">Personalization Missing</option>
+            <option value="Not_Energetic_enough">Not Energetic enough</option>
+            <option value="Low_Pitch">Low Pitch</option>
+            <option value="Customer_connect_is_missing">customer connect is missing</option>
+            <option value="Incorrect_sentence_formation">Incorrect sentence formation</option>
+            <option value="Low_convincing_Skills">Low convincing Skills</option>
+            <option value="Language_Switch_Not_Done">Language Switch Not Done</option>
+            <option value="Not_Captured_unserviceable_Pin_Code">Not Captured unserviceable Pin Code</option>
+        </select>
+        
+
+        <label for="Advisor_Error_Fatal">Advisor Error Fatal:</label>
+        <select name="Advisor_Error_Fatal" id="Advisor_Error_Fatal">
+            <option value="Wrong_or_Expired_SD_offer_pitched">Wrong / Expired SD offer pitched</option>
+            <option value="NA">NA</option>
+            <option value="Wrong_Information_Shared_related_to_loan_details">Wrong Information Shared related to loan details (Loan Amt, EMI, ROI etc.)</option>
+            <option value="Missed_to_Inform_Loan_Details">Missed to Inform Loan Details (Loan Amt, EMI, ROI etc.)</option>
+            <option value="Incorrect_Information_Shared">Incorrect Information Shared</option>
+            <option value="ZTP">ZTP</option>
+        </select>
+        
+        <label>Fatal Marked or not:</label>
+        <div class="radio-group">
+            <input type="radio" id="yes" name="fatal" value="Yes">
+            <label class="radio-label" for="yes">Yes</label>
+        </div>
+        <div class="radio-group">
+            <input type="radio" id="no" name="fatal" value="No">
+            <label class="radio-label" for="no">No</label>
+        </div>
+        
+        <label for="Any_rude_Tone">Any Rude Tone/Misbehavior/Non-Compliance/ZTP Observed:</label>
+        <select name="Any_rude_Tone" id="Any_rude_Tone">
+            <option value="Rude_with_customer">Rude with customer</option>
+            <option value="Misbehaved">Misbehaved/abusive</option>
+            <option value="breach_of_policy">breach of policy</option>
+            <option value="fake_sale_uploaded">fake sale uploaded</option>
+            <option value="call_avoidance">call avoidance</option>
+        </select>
+
+        <label for="Mention_Process_Gap">Mention Process Gap:</label>
+        <select name="Mention_Process_Gap" id="Mention_Process_Gap">
+            <option value="Lender_Switch">Lender Switch</option>
+            <option value="Pin_Code_Eligibility">Pin Code Eligibility</option>
+            <option value="Income_less_than_20K">Income less than 20 K</option>
+            <option value="Negative_Profession">Negative Profession</option>
+            <option value="Age_criteria_not_fulfilled">Age criteria not fulfilled</option>
+            <option value="Bank_Reset">Bank Reset</option>
+            <option value="Offer_Expired">Offer Expired</option>
+            <option value="OTP_Not_received">OTP Not received</option>
+            <option value="Loan_Tenure_or_Amount_Change">Loan Tenure/Amount Change</option>
+            <option value="Na">Na</option>
+            <option value="Advisor">Advisor *</option>
+            <option value="Loan_Rejected">Loan Rejected</option>
+        </select>
+        
+
+        <label for="Call_Observations">Call Observations:</label>
+        <input type="text" name="Call_Observations" id="Call_Observations">
+        <label for="Mention_Good_Practice">Mention Good Practice followed by Advisor:</label>
+        <input type="text" name="Mention_Good_Practice" id="Mention_Good_Practice">
+        
+        <label for="Offers_Pitched">Offers Pitched:</label>
+<div class="radio-group">
+    <input type="radio" id="offers_pitched_yes" name="offers_pitched" value="Yes">
+    <label class="radio-label" for="offers_pitched_yes">Yes</label>
+</div>
+<div class="radio-group">
+    <input type="radio" id="offers_pitched_no" name="offers_pitched" value="No">
+    <label class="radio-label" for="offers_pitched_no">No</label>
+</div>
+<div class="radio-group">
+    <input type="radio" id="offers_pitched_partial" name="offers_pitched" value="Partial T&C Shared">
+    <label class="radio-label" for="offers_pitched_partial">Partial T&C Shared</label>
+</div>
+<div class="radio-group">
+    <input type="radio" id="offers_pitched_all_tc" name="offers_pitched" value="All T&C shared however to be more effective while pitching the offer">
+    <label class="radio-label" for="offers_pitched_all_tc">All T&C shared however to be more effective while pitching the offer</label>
+</div>
+<div class="radio-group">
+    <input type="radio" id="offers_pitched_na" name="offers_pitched" value="NA">
+    <label class="radio-label" for="offers_pitched_na">NA</label>
+</div>
+<div class="radio-group">
+    <input type="radio" id="offers_pitched_incorrect" name="offers_pitched" value="Incorrect Offer Pitch">
+    <label class="radio-label" for="offers_pitched_incorrect">Incorrect Offer Pitch</label>
+</div>
+
+        <label for="Remarks_For_Offer_Errors">Remarks For Offer Errors:</label>
+        <input type="text" name="Remarks_For_Offer_Errors" id="Remarks_For_Offer_Errors">
+        
+        <label for="DT_Followed">DT Followed:</label>
+<div class="radio-group">
+    <input type="radio" id="dt_followed_yes" name="DT_Followed" value="Yes">
+    <label class="radio-label" for="dt_followed_yes">Yes</label>
+</div>
+<div class="radio-group">
+    <input type="radio" id="dt_followed_no" name="DT_Followed" value="No">
+    <label class="radio-label" for="dt_followed_no">No</label>
+</div>
+<div class="radio-group">
+    <input type="radio" id="dt_followed_incorrect" name="DT_Followed" value="Incorrect path followed">
+    <label class="radio-label" for="dt_followed_incorrect">Incorrect path followed</label>
+</div>
+
+        <label for="incorrect_DT_error_Remarks">Incorrect DT Error Remarks:</label>
+        <input type="text" name="incorrect_DT_error_Remarks" id="incorrect_DT_error_Remarks">
+        
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

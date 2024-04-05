@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recheck Session IDs</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-5jPGB1vzY6UHjpEP6fBCtI3b6ryVnkJepWIFmyYBsbrGgMFNxfB8qSw8qPFvIYiCtC+m/D+lyR4Ep8eSWhr9oQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .card {
+      border: none;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      height: 100%;
+    }
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+    }
+    .card-title {
+      color: #333;
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: auto; /* Align title to the top */
+    }
+    .card-text {
+      color: #666;
+    }
+    .icon {
+      margin-right: 10px;
+      color: red;
+    }
+    .btn-recheck-done {
+      background-color: red;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: auto; /* Align buttons to the bottom */
+    }
+    .btn-recheck-done:hover {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">Session IDs for Recheck</h1>
+    <div class="row">
+      {% for audit_form in audit_forms %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <h5 class="card-title">{{ audit_form.sessionid }}</h5>
+            <!-- <img src="your_image_url_here" alt="Image" class="card-img float-left mr-3"> -->
+            <div class="inlinee" style="display: flex; margin-top: 10px;">
+
+            
+            <form action="{% url 'recheck_done' sessionid=audit_form.sessionid %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="sessionid" value="{{ audit_form.sessionid }}">
+              <button type="submit" class="btn-recheck-done" style="margin-right: 5px;">Recheck Done</button>  
+            </form>
+            <form action="/staff/auditform/{{ audit_form.sessionid }}/" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="sessionid" value="{{ audit_form.sessionid }}">
+              <button type="submit" class="btn-recheck-done">Audit Details</button>  
+            </form>
+        </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-md-4 mb-4">No forms found for recheck</div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Bootstrap JS, jQuery, and Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

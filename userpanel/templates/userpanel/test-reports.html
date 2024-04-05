@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        a {
+            color: #f74242;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .test-evaluations {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .test-evaluations h2 {
+            color: #f74242;
+            margin-bottom: 15px;
+        }
+
+        .test-evaluations ul {
+            margin-top: 10px;
+        }
+
+        .test-evaluations li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-evaluations li:last-child {
+            border-bottom: none;
+        }
+
+        .generate-certificate-btn {
+            /* color: #f74242; */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .generate-certificate-btn:hover {
+            /* color: #f74242; */
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            {% if test_evaluations %}
+            {% for evaluation in test_evaluations %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Test Form Name: {{ evaluation.test_form.test_name }}</h5>
+                        <p class="card-text">Marks: {{ evaluation.marks }}</p>
+                        <p class="card-text">Percentage: {{ evaluation.percentage }}%</p>
+                        <a href="{% url 'generate_certificate' evaluation.id %}"
+                            class="btn btn-primary generate-certificate-btn">
+                            <i class="fas fa-certificate icon"></i> Generate Certificate
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No test evaluations found.</p>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Bootstrap JS and Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+        border-radius: 5px;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+      }
+
+      .profile-info {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .profile-info h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .profile-info span {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .graph-heading {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .chart-container {
+        position: relative;
+        margin-bottom: 20px;
+        height: 400px;
+      }
+
+      canvas {
+        max-width: 100%;
+        border-radius: 5px;
+      }
+
+      .form-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .form-container label {
+        display: none;
+        /* Hide the labels */
+      }
+
+      .form-container input[type="date"],
+      .form-container input[type="submit"] {
+        padding: 10px;
+        margin: 0 5px;
+        /* Add some spacing between elements */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .form-container input[type="date"] {
+        width: 30%;
+        /* Adjust the width of the date inputs */
+      }
+
+      .form-container input[type="submit"] {
+        background-color: #f74242;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      .form-container input[type="submit"]:hover {
+        background-color: #f74242;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      .btn {
+        background-color: #f74242;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 4px;
+      }
+
+      .btn:hover {
+        background-color: #f22;
+      }
+
+      .logout-btn {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .logout-btn:hover {
+        background-color: #555;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container" style="color: #f74242">
+      <div class="profile-info">
+        <h1 style="color: #f74242">
+          Welcome,
+          <span style="color: #f74242"
+            >{{ user.first_name }} {{ user.last_name }}</span
+          >
+        </h1>
+        <a href="/logout" class="logout-btn">Logout</a>
+      </div>
+      <div class="container1">
+        <form action="/updateprofile/" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              value="{{ user.first_name }}"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              value="{{ user.last_name }}"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="{{ user.email }}"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value="{{ user.username }}"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              class="form-control"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+      <div class="form-container">
+        <form method="post">
+          {% csrf_token %}
+          <label for="start-date">Select Date Range:</label>
+          <div class="date-range-picker">
+            <input
+              type="date"
+              id="start-date"
+              name="start_date"
+              value="{{ start_date }}"
+              max="{{ default_end_date }}"
+              required
+            />
+            <span class="separator">to</span>
+            <input
+              type="date"
+              id="end-date"
+              name="end_date"
+              value="{{ end_date }}"
+              min="{{ default_start_date }}"
+              max="{{ default_end_date }}"
+              required
+            />
+            <input type="submit" value="Apply" />
+          </div>
+        </form>
+      </div>
+
+      <div class="graph-heading">
+        <i class="fa fa-line-chart"></i> Test Performance
+      </div>
+      <div class="chart-container">
+        <canvas id="test-chart"></canvas>
+      </div>
+
+      <div class="graph-heading">
+        <i class="fa fa-bar-chart"></i> Audit Performance
+      </div>
+      <div class="chart-container">
+        <canvas id="audit-chart"></canvas>
+      </div>
+    </div>
+    <!-- Add other graphs or data as needed -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          // Test details data
+          var testLabels = [{% for test in tests %}"{{ test.test_form.test_name }}", {% endfor %}];
+      var testMarks = [{% for test in tests %}{{ test.percentage  }}, {% endfor %}];
+
+      // Audit details data
+      var auditData = [{% for audit, score in audits %}{ sessionid: "{{ audit.sessionid }}", score: "{{ score }}" }, {% endfor %}];
+
+      // Separate session IDs and marks
+      var auditLabels = auditData.map(function (audit) {
+          return audit.sessionid;
+      });
+
+      var auditMarks = auditData.map(function (audit) {
+          return audit.score;
+      });
+
+      // Create test chart
+      var testChartCanvas = document.getElementById('test-chart').getContext('2d');
+      var testChart = new Chart(testChartCanvas, {
+          type: 'bar',
+          data: {
+              labels: testLabels,
+              datasets: [{
+                  label: 'Percentage',
+                  data: testMarks,
+                  backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+
+      // Create audit chart
+      var auditChartCanvas = document.getElementById('audit-chart').getContext('2d');
+      var auditChart = new Chart(auditChartCanvas, {
+          type: 'bar',
+          data: {
+              labels: auditLabels,
+              datasets: [{
+                  label: 'Score',
+                  data: auditMarks,
+                  backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+      });
+    </script>
+  </body>
+</html>

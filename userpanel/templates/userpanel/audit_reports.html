@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f8f9fa;
+      }
+      h1,
+      h2 {
+        color: #343a40;
+      }
+      p {
+        margin: 10px 0;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 5px;
+      }
+      a {
+        color: #f74242;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .profile-info {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .audit-forms {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .audit-forms h2 {
+        color: #f74242;
+        margin-bottom: 10px;
+      }
+      .audit-forms ul {
+        margin-top: 10px;
+      }
+      .audit-forms li {
+        padding: 15px 0;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .audit-forms li:last-child {
+        border-bottom: none;
+      }
+      .audit-forms li a {
+        color: #f74242;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .audit-forms li a:hover {
+        color: #f74242;
+      }
+      .quality-score {
+        color: #28a745;
+      }
+      .icon {
+        margin-right: 10px;
+        color: #f74242;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="audit-forms">
+      <h2><i class="fas fa-tasks icon"></i> Audit Forms</h2>
+      {% if audit_forms %}
+      <ul id="audit-list">
+        {% for audit_form, quality_score in audit_forms %}
+        <li>
+          <a
+            href="{% url 'audit_form_detail' session_id=audit_form.sessionid %}"
+          >
+            <i class="fas fa-file-alt"></i> {{ audit_form.sessionid }}
+          </a>
+          <span class="quality-score"
+            ><i class="fas fa-check-circle"></i> Quality Score:
+            {{quality_score}}</span
+          >
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No audit forms found.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

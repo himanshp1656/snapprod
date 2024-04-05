@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-wmJ2xusCYv7u/eeUJ4IpEx28KwcUr8RarxKZq8pQL+hU5uSD+TGmf6dHRdNhF0w5DG2gYNzQ2qYwVoczbY07Ww==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Add Bootstrap Icons via CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+
+    <title>staff panel</title>
+    <style>
+        .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(30, 157, 41);
+    z-index: 1000;
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+}
+
+.popup-content {
+    position: relative;
+}
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><img src="{% static 'image/snapdeal.png' %}" alt=""></h1>
+            <ul class="nav-links">
+                <li><a href="profile/">welcome {{first_name}}</a></li>
+                <li><a href="/change-password/">change password</a></li>
+                <li><a href="/logout/">logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="left-sidebar">
+           
+            <ul class="dropdown-menu">
+                <li class="dropdown">
+                    <a href="/watch-alert/"><i class="bi bi-bell-fill"></i> Alerts</a>
+                    
+                </li>
+               
+                
+                <li class="dropdown"><a href="#"><i class="bi bi-bar-chart-line-fill"></i>Reports</a>
+                    <ul class="submenu">
+                        <li><a href="/staff/audit-reports/">audit reports</a></li>
+                        <li><a href="/staff/test-reports/">test reports</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="/take-test/"><i class="bi bi-person-fill"></i>Agent Test Form</a>
+                   
+                </li>
+                <li class="dropdown"><a href="/watch-sop/"><i class="bi bi-award"></i>sop</a>
+                    <li class="dropdown"><a href="/watch_video/"><i class="bi bi-award"></i>watch video</a>
+                   
+                </li>
+                <!--  <i class="bi bi-caret-down" style="margin-left: 8em;"></i> -->
+               
+            </ul>
+        </div>
+
+
+        <div class="right-content">
+            <div class="image-container">
+                <img src="{% static 'image/snapdeal.png' %}" alt="Your Image">
+            </div>
+            
+            <div class="centered-boxes">
+                <div class="box">Monitor</div>
+                <div class="box">Coach</div>
+                <div class="box">Improve</div>
+                <div class="box">Repeat</div>
+            </div>
+            <div class="textinfo">
+                A comprehensive automated Quality monitoring solution for your voice, Non Voice and in person CX touchpoints.
+            </div>
+        </div>
+    </div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <h2>You got -- marks!</h2>
+            <!-- You can replace  with the actual marks dynamically using JavaScript -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Get the popup element
+    const popup = document.getElementById('popup');
+
+    // Show the popup when the page redirects to '/'
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('marks')) {
+        const marks = urlParams.get('marks');
+        const popupContent = document.querySelector('.popup-content h2');
+        popupContent.textContent = `You got ${marks} marks!`;
+        popup.style.display = 'block';
+    }
+
+    // Close the popup when clicking on the close button
+    const closePopup = document.querySelector('.close-popup');
+    closePopup.addEventListener('click', function() {
+        popup.style.display = 'none';
+    });
+});
+
+    </script>
+</body>
+</html>

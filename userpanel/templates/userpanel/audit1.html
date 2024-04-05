@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2 {
+            color: #343a40;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        a {
+            color: #f74242;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .profile-info, .audit-forms {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .audit-forms h2 {
+            color: #f74242;
+            margin-bottom: 10px;
+        }
+        .audit-forms ul {
+            margin-top: 10px;
+        }
+        .audit-forms li {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .audit-forms li:last-child {
+            border-bottom: none;
+        }
+        .audit-forms li a {
+            color: #f74242;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .audit-forms li a:hover {
+            color: #f74242;
+        }
+        .quality-score {
+            color: #28a745;
+        }
+        .icon {
+            margin-right: 10px;
+            color: #f74242;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        {% if audit_forms %}
+        {% for audit_form, quality_score in audit_forms %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-file-alt icon"></i>{{ audit_form.sessionid }}</h5>
+                    <p class="card-text">Quality Score: <span class="quality-score"><i class="fas fa-check-circle"></i>{{ quality_score }}</span></p>
+                    <a href="{% url 'audit_form_detail' session_id=audit_form.sessionid %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No audit forms found.</p>
+        {% endif %}
+    </div>
+</div>
+<!-- Bootstrap JS and Font Awesome -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
