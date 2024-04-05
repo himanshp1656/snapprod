@@ -137,7 +137,7 @@
     <h1>{{ audit_form.sessionid }} Details</h1>
 
     <div class="audit-details">
-        <form action="/recheck /{{ audit_form.sessionid }}/" method="post">
+        <form action="/recheck/{{ audit_form.sessionid }}/" method="post">
             {% csrf_token %}
 
             <p><input type="checkbox" id="agentid" name="fields" value="agentid" {% if audit_form.recheck  ==  'True' and 'agentid' in audit_form.correction_field %} checked {% endif %}>
