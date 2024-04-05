@@ -56,3 +56,7 @@ urlpatterns = [
        path('form-dashboard/', views.form_dashboard, name='form-dashboard'),
        path('updateprofile/', views.updateprofile, name='updateprofile'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
