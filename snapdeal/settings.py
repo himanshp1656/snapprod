@@ -147,6 +147,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CSRF_TRUSTED_ORIGINS = [
-    "https://snapdeal.azurewebsites.net",
+    "https://himanshp1656.azurewebsites.net",
     # Add other trusted origins as needed
 ]
