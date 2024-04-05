@@ -150,3 +150,4 @@ CSRF_TRUSTED_ORIGINS = [
     "https://himanshp1656.azurewebsites.net",
     # Add other trusted origins as needed
 ]
+
