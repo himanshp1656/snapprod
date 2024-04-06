@@ -51,7 +51,7 @@ def login_view(request):
             login(request, user)
             user_profile = UserProfile.objects.get(user=user)
             if user_profile.usertype == 'admin':
-                return render(request, 'adminpanel/index.html',{'first_name': request.user.first_name})
+                return redirect('/')
             elif user_profile.usertype == 'staff':
                 redirect_url = 'staff'
                 if request.GET:
